@@ -1,0 +1,44 @@
+"""
+4.- Crear una funcion en python que permita leer un .csv y reciba otro parametro, el cual si 
+existe haga referencia a una o varias columnas de agrupacion. 
+Retornar el resultado agrupado, utilizando una funcion de agregacion para 
+finalizar la agrupacion (usar sum, max, min o cualquiera otra f(x) de agregacion, tal cual lo harian en sql)
+"""
+
+from pandas import read_csv 
+
+def main():
+    resultado = leer_csv_agrupado("customers-100.csv", ['First Name'])
+    print(resultado)
+
+
+def leer_csv(archivo: str, columnas: list[str] = None):
+    if not columnas:
+        columnas = []
+    datos = read_csv(archivo)
+    columnas_existentes = []
+    for columna in columnas:
+        if columna in datos.columns:
+            columnas_existentes.append(columna)
+
+    return datos[columnas_existentes] if columnas_existentes else datos
+    
+
+def leer_csv_agrupado(archivo: str, columnas: list[str] = None):
+    if not columnas:
+        columnas = []
+    datos = read_csv(archivo)
+    
+    columnas_existentes = []
+
+    for columna in columnas:
+        if columna in datos.columns:
+            columnas_existentes.append(columna)
+
+    if columnas_existentes:
+        return datos.groupby(columnas_existentes)['Subscription Date'].max()
+
+    return datos
+
+if __name__ == '__main__':
+    main()
