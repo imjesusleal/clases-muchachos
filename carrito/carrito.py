@@ -26,6 +26,7 @@ class Elemento():
         if valor <= 0:
             raise ValueError("No loco, no regalo nada")
         return True
+    
 
 class Carrito():
     def __init__(self):
