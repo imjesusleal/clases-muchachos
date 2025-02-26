@@ -103,4 +103,3 @@ print(mary1.salario)
 # public
 # private
 # protected
-
